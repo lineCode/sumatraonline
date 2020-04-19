@@ -37,6 +37,10 @@ div id=show-pdf
   div id=1 style=position:relative
     div id=viewer // not needed?
     div resize-watcher
+    // created by pdf.js
     div class=page data-page-number=1 data-loaded=true style=fixed-size
       div class=canvasWrapper
       div class=textLayer 
+  div id=2 style=position:relative
+    ...
+  div id=3 ...

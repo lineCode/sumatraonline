@@ -1,6 +1,10 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import PDFPage from "./PDFPage.svelte";
   import { fileToShow } from "./store.js";
+
+  let pdflib = window.pdfjsLib;
+  let viewer = window.pdfjsViewer;
 
   const scaleAuto = "auto";
   const scalePageFit = "page-fit";
@@ -8,82 +12,12 @@
   const scalePageWidth = "page-width";
   const scalePageHeight = "page-height";
 
-  let msg = "Loading a file...";
   let pdfDoc = null;
-  let nPages = 0;
-  let pdflib = window.pdfjsLib;
-  let viewer = window.pdfjsViewer;
-  let pdfViewer = null;
-  let container = null;
-
-  // settings for PDF viewer
-  let page = 1;
+  let pageNumbers = [];
   let rotate = 0;
   let scale = scalePageWidth;
-  let resize = false;
-  let annotation = false;
-  let text = true;
-
-  let annotationLayer = undefined;
-  let textLayer = undefined;
-  if (annotation) {
-    annotationLayer = new viewer.DefaultAnnotationLayerFactory();
-  }
-  if (text) {
-    textLayer = new viewer.DefaultTextLayerFactory();
-  }
-
-  let pdfLinkService = new viewer.PDFLinkService();
-
-  $: goToPage(page);
-  $: drawScaled(scale);
-  $: doRotate(rotate);
-
-  function goToPage(newPage) {
-    if (!pdfViewer) {
-      return;
-    }
-    let pdfPage = pdfDoc.getPage(newPage);
-    pdfViewer.setPdfPage(pdfPage);
-    pdfViewer.draw();
-    page = newPage;
-  }
-
-  function doRotate(newRotate) {
-    if (!pdfViewer) {
-      return;
-    }
-    pdfViewer.update(scale, newRotate);
-    pdfViewer.draw();
-    rotate = newRotate;
-  }
-
-  function calculateScale(width = -1, height = -1) {
-    // // Reset scaling to 1 so that "this.pdfViewer.viewport.width" gives proper width;
-    pdfViewer.update(1, rotate);
-    if (width === -1 && height === -1) {
-      width = container.offsetWidth;
-    }
-    return width / pdfViewer.viewport.width;
-  }
-
-  function drawScaled(newScale) {
-    if (!pdfViewer) {
-      return;
-    }
-    console.log(`drawScaled(${newScale})`);
-    if (newScale === scalePageWidth) {
-      newScale = calculateScale();
-      pdfViewer.update(newScale, rotate);
-      pdfViewer.draw();
-    }
-  }
-
-  function resizeScale() {
-    if (resize) {
-      drawScaled(scalePageWidth);
-    }
-  }
+  let nPages = 0;
+  let msg = "Loading a file...";
 
   async function handleOnMount() {
     let file = $fileToShow;
@@ -101,24 +35,13 @@
     try {
       pdfDoc = await pdflib.getDocument(params).promise;
       nPages = pdfDoc.numPages;
-      msg = `Loaded a PDF file with ${nPages} pages`;
-      let pdfPage = await pdfDoc.getPage(1);
+      const a = [];
+      for (let i = 1; i <= nPages; i++) {
+        a.push(i);
+      }
+      pageNumbers = a;
+      //msg = `Loaded a PDF file with ${nPages} pages`;
       msg = null;
-      // container is the element for the viewer
-      // each PDFPageView creates a div and appends it to container
-      pdfViewer = new viewer.PDFPageView({
-        container: container,
-        id: page,
-        scale: 1,
-        defaultViewport: pdfPage.getViewport({ scale: 1 }),
-        // We can enable text/annotations layers, if needed
-        textLayerFactory: textLayer,
-        annotationLayerFactory: annotationLayer
-      });
-      // Associates the actual page with the view, and drawing it
-      pdfViewer.setPdfPage(pdfPage);
-      pdfLinkService.setViewer(pdfViewer);
-      drawScaled(scale);
     } catch (err) {
       msg = `Failed loading a file ${file.name} with error '${err}'`;
       pdfDoc = null;
@@ -143,21 +66,14 @@
     padding: 1em;
     background-color: #f4f4f4;
   }
-  .viewer {
-    background-color: #fafafa;
-  }
-  #viewerContainer {
-    position: relative;
-  }
-
 </style>
 
 {#if msg}
   <div class="msg">{msg}</div>
 {/if}
 
-<div id="viewerContainer" bind:this={container}>
-    {#if pdfViewer}
-        <div id="viewer" class="pdfViewer" />
-    {/if}
-</div>
+{#if nPages > 0}
+  {#each pageNumbers as pageNo, _ (pageNo)}
+    <PDFPage pdfDoc={pdfDoc} pageNo={pageNo} rotate={rotate} scale={scale}></PDFPage>
+  {/each}
+{/if}
