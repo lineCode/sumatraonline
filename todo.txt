@@ -4,6 +4,14 @@ Todo:
  - plus ability to drag & drop PDF file
  - /viewlocal/${file id} : is a UI like pdfvuer
  - /viewurl/${url} : downloads and shows a file from a url (with caching)
+ - on drop validate is .pdf file
+ - use https://github.com/lukeed/navaid
+ - handle window resize
+ - show all pages
+ - [x] figure out text layer
+ - next / prev page
+ - save a file in storage
+
 
 competition / inspiration:
 - https://blog.koley.in/pdfvuer/
@@ -21,3 +29,13 @@ competition / inspiration:
 - https://github.com/codedread/kthoom/commits/master
 - https://github.com/flexpaper/pdf2json
 - https://react-pdf-viewer.dev/purchase : maybe create a similar product
+
+PDFVuer:
+div id=show-pdf
+  div id=buttons
+  div id=1 style=position:relative
+    div id=viewer // not needed?
+    div resize-watcher
+    div class=page data-page-number=1 data-loaded=true style=fixed-size
+      div class=canvasWrapper
+      div class=textLayer 
