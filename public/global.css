@@ -72,30 +72,3 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
-
-.textLayer {
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	overflow: hidden;
-	opacity: .2;
-	line-height: 1;
-}
-
-.textLayer>div {
-	color: transparent;
-	position: absolute;
-	white-space: pre;
-	cursor: text;
-	transform-origin: 0 0;
-}
-
-.textLayer>span {
-	color: transparent;
-	position: absolute;
-	white-space: pre;
-	cursor: text;
-	transform-origin: 0 0;
-}

@@ -2,7 +2,11 @@
   import { onMount, onDestroy } from "svelte";
   import { fileToShow } from "./store.js";
 
+  const scaleAuto = "auto";
+  const scalePageFit = "page-fit";
+  const scalePageActual = "page-actual";
   const scalePageWidth = "page-width";
+  const scalePageHeight = "page-height";
 
   let msg = "Loading a file...";
   let pdfDoc = null;
@@ -15,7 +19,7 @@
   // settings for PDF viewer
   let page = 1;
   let rotate = 0;
-  let scale = "page-width";
+  let scale = scalePageWidth;
   let resize = false;
   let annotation = false;
   let text = true;
@@ -100,6 +104,8 @@
       msg = `Loaded a PDF file with ${nPages} pages`;
       let pdfPage = await pdfDoc.getPage(1);
       msg = null;
+      // container is the element for the viewer
+      // each PDFPageView creates a div and appends it to container
       pdfViewer = new viewer.PDFPageView({
         container: container,
         id: page,
