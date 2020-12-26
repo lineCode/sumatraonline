@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { router } from "./router.js";
   import PDFPage from "./PDFPage.svelte";
   import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
 
@@ -34,7 +35,7 @@
     }
     if (!file) {
       console.log("no file, going back to /");
-      window.goToURL("/");
+      router.run("/");
       return;
     }
     console.log("no file, going back to /");

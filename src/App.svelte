@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { len } from "./utils.js";
+  import { router } from "./router.js";
 
   import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
 
@@ -51,7 +52,7 @@
     await fs.writeFile("/" + fileName, view);
     console.log("Wrote file to storage:", fileName);
     const uri = encodeURI("/viewlocal/#" + fileName);
-    window.goToURL(uri);
+    router.run(uri);
   }
 </script>
 
