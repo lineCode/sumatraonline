@@ -1,10 +1,13 @@
 <script>
-  import { fileToShow } from "./store.js";
+  import { onMount } from "svelte";
+  import { len } from "./utils.js";
+
   import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
 
   let isDraggedOver = false;
+  let files = [];
 
-  const fs = new FS("files");
+  const fs = new FS("files").promises;
 
   /**
    * @param {Event} e
@@ -13,6 +16,11 @@
     e.preventDefault();
     e.stopPropagation();
   }
+
+  async function handleOnMount() {
+    files = await fs.readdir("/");
+  }
+  onMount(handleOnMount);
 
   function handleDragEnter() {
     console.log("dragEnter");
@@ -27,7 +35,7 @@
   /**
    * @param {DragEvent} e
    */
-  function handleDragDrop(e) {
+  async function handleDragDrop(e) {
     console.log("dragDrop");
     //preventDefaults(e);
     let dt = e.dataTransfer;
@@ -35,8 +43,15 @@
     //console.log("files:", files);
     const firstFile = files[0];
     console.log("firstFile:", firstFile);
-    fileToShow.set(files[0]);
-    window.goToURL("/viewdroppedfile");
+    //fileToShow.set(firstFile);
+    const fileName = firstFile.name;
+    const buffer = await firstFile.arrayBuffer();
+    const view = new Uint8Array(buffer);
+
+    await fs.writeFile("/" + fileName, view);
+    console.log("Wrote file to storage:", fileName);
+    const uri = encodeURI("/viewlocal/#" + fileName);
+    window.goToURL(uri);
   }
 </script>
 
@@ -64,3 +79,12 @@
   ondragover="return false">
   <div>Drop PDF file to view.</div>
 </div>
+
+{#if len(files) > 0}
+  <div>Local files:</div>
+  <div class="flex flex-col">
+    {#each files as fileName}
+      <a href="/viewlocal/#{fileName}">{fileName}</a>
+    {/each}
+  </div>
+{/if}

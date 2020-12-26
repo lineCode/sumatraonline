@@ -1,7 +1,11 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import PDFPage from "./PDFPage.svelte";
-  import { fileToShow } from "./store.js";
+  import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
+
+  export let fileName = "";
+
+  const fs = new FS("files").promises;
 
   let pdflib = window.pdfjsLib;
   let viewer = window.pdfjsViewer;
@@ -20,13 +24,21 @@
   let msg = "Loading a file...";
 
   async function handleOnMount() {
-    let file = $fileToShow;
+    console.log("ViewLocal: handleOnMount: loading file", fileName);
+    let file;
+    try {
+      file = await fs.readFile("/" + fileName);
+    } catch (ex) {
+      // do nothing
+      console.log("ViewLocal: handleOnMount: fs.ReadFile() failed with", ex);
+    }
     if (!file) {
+      console.log("no file, going back to /");
       window.goToURL("/");
       return;
     }
-    msg = `Loading ${file.name} file..`;
-    const ab = await file.arrayBuffer();
+    console.log("no file, going back to /");
+    const ab = file.buffer;
     const params = {
       data: ab,
       verbosity: 0
@@ -50,11 +62,13 @@
   onMount(handleOnMount);
 
   onDestroy(() => {
-    // console.log("destroying editor:", editor);
+    console.log("destroying viewer");
+    /*
     if (pdfViewer) {
       pdfViewer.destroy();
       pdfViewer = null;
     }
+    */
     pdfDoc = null;
     //document.removeEventListener("keydown", onKeyDown);
   });
