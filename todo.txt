@@ -15,7 +15,7 @@ Todo:
 
 competition / inspiration:
 - https://cdnjs.com/libraries/pdf.js
-- https://blog.koley.in/pdfvuer/
+- https://github.com/arkokoley/pdfvuer
 - https://github.com/readium/readium-desktop
 - https://github.com/thecodingmachine/gotenberg
 - https://pixlr.com/e : steal good UI ideas

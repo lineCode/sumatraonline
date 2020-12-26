@@ -2,11 +2,12 @@
   "name": "sumatra-reader-online",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "rollupbuild": "rollup -c",
+    "rollupdev": "rollup -c -w",
     "start": "snowpack dev",
-    "snowbuild": "snowpack build --verbose",
-    "snowbuild-watch": "snowpack build --watch"
+    "build": "snowpack build",
+    "buildv": "snowpack build --verbose",
+    "build-watch": "snowpack build --watch"
   },
   "devDependencies": {
     "rollup": "^1.20.0",
