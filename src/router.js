@@ -29,7 +29,7 @@ function routeSlash() {
 
 function routeViewLocal() {
   console.log("routeViewLocal");
-  const fileName = window.location.hash.slice(1);
+  const fileName = decodeURIComponent(window.location.hash.slice(1));
   console.log("dispatch /viewlocal/, fileName:", fileName);
   const opts = {
     target: document.body,
