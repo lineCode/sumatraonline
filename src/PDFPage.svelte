@@ -31,7 +31,6 @@
     textLayer = new viewer.DefaultTextLayerFactory();
   }
 
-
 /*
   $: goToPage(page);
   $: drawScaled(scale);
@@ -56,6 +55,15 @@
     }
   }
 */
+
+  class Dispatcher {
+    dispatch(eventName, args) {
+      console.log("dispatch:", eventName, args);
+    }
+    _on(eventName, args) {
+      console.log("_on:", eventName, args);
+    }
+  }
 
   function calculateScale(width = -1, height = -1) {
     // Reset scaling to 1 so that "pdfViewer.viewport.width" gives proper width;
@@ -83,7 +91,8 @@
     // each PDFPageView creates a div and appends it to container
     pdfPage = await pdfDoc.getPage(pageNo);
     let pdfLinkService = new viewer.PDFLinkService();
-    pageView = new viewer.PDFPageView({
+    const opts = {
+      eventBus: new Dispatcher(),
       container: container,
       id: pageNo,
       scale: 1,
@@ -91,7 +100,8 @@
       // We can enable text/annotations layers, if needed
       textLayerFactory: textLayer,
       annotationLayerFactory: annotationLayer
-    });
+    };
+    pageView = new viewer.PDFPageView(opts);
     // associates the actual page with the view, and drawing it
     pageView.setPdfPage(pdfPage);
     pdfLinkService.setViewer(pageView);
