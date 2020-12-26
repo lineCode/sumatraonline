@@ -1,36 +1,3 @@
-Todo:
-- copy https://blog.koley.in/pdfvuer/
- - main page is a list of local documents
- - plus ability to drag & drop PDF file
- - /viewlocal/${file id} : is a UI like pdfvuer
- - /viewurl/${url} : downloads and shows a file from a url (with caching)
- - on drop validate is .pdf file
- - use https://github.com/lukeed/navaid
- - handle window resize
- - show all pages
- - [x] figure out text layer
- - next / prev page
- - save a file in storage
-
-
-competition / inspiration:
-- https://cdnjs.com/libraries/pdf.js
-- https://github.com/arkokoley/pdfvuer
-- https://github.com/readium/readium-desktop
-- https://github.com/thecodingmachine/gotenberg
-- https://pixlr.com/e : steal good UI ideas
-- https://www.photopea.com/ : steal good UI ideas
-- https://photoeditor.polarr.co/ : steal good UI ideas
-- https://github.com/axa-group/Parsr : conversion / extraction
-- https://github.com/johnfactotum/foliate : epub reader based on epub.js
-- https://github.com/medialab/tesselle : image viewer on web
-- https://github.com/terkelg/exifer
-- https://www.mobileread.com/forums/showthread.php?t=61986
-- https://react-pdf-viewer.dev/
-- https://github.com/codedread/kthoom/commits/master
-- https://github.com/flexpaper/pdf2json
-- https://react-pdf-viewer.dev/purchase : maybe create a similar product
-
 PDFVuer:
 div id=show-pdf
   div id=buttons

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "es2020",
+    "checkJs": true
+  },
+  "include": ["src/**/*"],
+  "typeAcquisition": {"enable": true}
+}
