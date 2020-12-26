@@ -32,13 +32,6 @@
 </script>
 
 <style>
-  h1 {
-    color: #333;
-    font-size: 1em;
-    font-weight: normal;
-    text-align: center;
-  }
-
   #dragarea {
     width: 80%;
     margin: 0 auto;
@@ -56,15 +49,9 @@
   #dragarea.hili {
     border: 2px dashed blue;
   }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
 </style>
 
-<h1>Sumatra PDF Reader online</h1>
+<h1 class="text-center">Sumatra PDF Reader online</h1>
 <!-- ondragover is vital in Chrome or else default handler will take over -->
 <div
   id="dragarea"

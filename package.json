@@ -6,17 +6,13 @@
     "rollupdev": "rollup -c -w",
     "start": "snowpack dev",
     "build": "snowpack build",
+    "buildprod": "snowpack build --config snowpack.config.prod.js",
     "buildv": "snowpack build --verbose",
     "build-watch": "snowpack build --watch"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.0",
-    "@rollup/plugin-node-resolve": "^7.0.0",
     "@snowpack/plugin-svelte": "^3.3.1",
-    "rollup": "^1.20.0",
-    "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^5.1.2",
+    "@snowpack/plugin-webpack": "^2.2.0",
     "snowpack": "^2.18.0",
     "svelte": "^3.31.0"
   },
