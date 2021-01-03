@@ -1,12 +1,6 @@
 // console.log("Deno:", Deno);
 
-async function build() {
-    Deno.removeSync("build", { recursive: true});
-
-    const p = Deno.run({
-        cmd: ["cmd", "/C", "npm run build"],
-    });
-    
+async function waitProcess(p: any) {
     try {
         const s = await p.status();
         console.log("status:", s);
@@ -16,25 +10,33 @@ async function build() {
     }
 }
 
+async function build() {
+    Deno.removeSync("build", { recursive: true});
+
+    const p = Deno.run({
+        cmd: ["cmd", "/C", "npm run build"],
+    });
+    waitProcess(p);
+}
+
 async function buildProd() {
     Deno.removeSync("build", { recursive: true});
 
     const p = Deno.run({
         cmd: ["cmd", "/C", "npm run buildprod"],
     });
-    
-    try {
-        const s = await p.status();
-        console.log("status:", s);
-    } catch (ex) {
-        //console.log("Deno.run failed with:", ex);
-        console.log("Deno.run failed");
-        throw ex;
-    }
+    waitProcess(p);
+}
+
+async function run() {
+    const p = Deno.run({
+        cmd: ["cmd", "/C", "npm run start"],
+    })
+    waitProcess(p);
 }
 
 function usage() {
-    console.log("Usage: doit.bat build | buildprod");
+    console.log("Usage: doit.bat build | buildprod | run");
 }
 
 function len(o : any) {
@@ -57,6 +59,9 @@ switch (arg) {
         break;
     case "buildprod":
         buildProd();
+        break;
+    case "run":
+        run();
         break;
     default:
         console.log("Unknown cmd-line args:", Deno.args);
