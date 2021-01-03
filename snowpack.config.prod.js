@@ -24,6 +24,6 @@ module.exports = {
     /* ... */
   },
   alias: {
-    /* ... */
+    "pdfjs-lib": "./src/pdfjs-lib.js",
   },
 };
