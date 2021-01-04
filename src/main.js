@@ -1,5 +1,4 @@
 import App from './App.svelte';
-import ViewLocal from './ViewLocal.svelte';
 import PDFJSViewer from './PDFJSViewer.svelte';
 
 import { router } from "./router.js";
@@ -7,6 +6,8 @@ import { router } from "./router.js";
 console.log("main.js");
 
 export let currentComponent = null;
+
+let currentFile = null;
 
 function unmount() {
   if (currentComponent) {
@@ -20,7 +21,6 @@ function mount(component) {
   currentComponent = component;
 }
 
-
 function routeSlash() {
   console.log("routeSlash");
   const opts = {
@@ -28,39 +28,36 @@ function routeSlash() {
   };
   const comp = new App(opts);
   mount(comp);
+  currentFile = null;
 }
 
-function routeViewLocal() {
-  console.log("routeViewLocal");
-  const fileName = decodeURIComponent(window.location.hash.slice(1));
-  console.log("dispatch /viewlocal/, fileName:", fileName);
+function routeViewLocal(params) {
+  console.log(`routeViewLocal, path: ${window.location.pathname}, params: ${params}`);
+  const fileName = params.filename;
+
+  // work-around interaction between Navaid and pdfjs viewer
+  // pdfjs viewer pushes state onto browser history
+  // which runs the Navaid.run() and I don't know how to prevent this
+  // maybe Navaid shouldn't work that way
+  // to work around this we remember which file is currently
+  // displayed and ignore redundant navigations
+  if (currentFile == fileName) {
+    return;
+  }
+  console.log("dispatch /viewlocal/, filename:", fileName);
   const opts = {
     target: document.body,
     props: {
       fileName: fileName,
     }
   }
-  const comp = new ViewLocal(opts);
+  const comp = new PDFJSViewer(opts);
+  currentFile = fileName;
   mount(comp);
 }
-
-function routePDFJSViewer() {
-    console.log("routePDFJSViewer");
-    const fileName = decodeURIComponent(window.location.hash.slice(1));
-    console.log("dispatch /pdfjsviewer/, fileName:", fileName);
-    const opts = {
-      target: document.body,
-      props: {
-        fileName: fileName,
-      }
-    }
-    const comp = new PDFJSViewer(opts);
-    mount(comp);
-  }
   
 router
   .on('/', routeSlash)
-  .on('/viewlocal/', routeViewLocal)
-  .on('/pdfjsviewer/', routePDFJSViewer);
+  .on('/viewlocal/:filename', routeViewLocal)
 
-router.listen();
+router.listen("/");

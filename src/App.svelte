@@ -51,7 +51,7 @@
 
     await fs.writeFile("/" + fileName, view);
     console.log("Wrote file to storage:", fileName);
-    const uri = encodeURI("/viewlocal/#" + fileName);
+    const uri = encodeURI("/viewlocal/" + fileName);
     router.run(uri);
   }
 </script>
@@ -82,17 +82,10 @@
 </div>
 
 {#if len(files) > 0}
-  <div>Local files, open with viewlocal:</div>
+  <div>Local files:</div>
   <div class="flex flex-col">
     {#each files as fileName}
-      <a href="/viewlocal/#{fileName}">{fileName}</a>
-    {/each}
-  </div>
-
-  <div>Local files, open with pdfjsviewer:</div>
-  <div class="flex flex-col">
-    {#each files as fileName}
-      <a href="/pdfjsviewer/#{fileName}">{fileName}</a>
+      <a href="/viewlocal/{fileName}">{fileName}</a>
     {/each}
   </div>
 {/if}

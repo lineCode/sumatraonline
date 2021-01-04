@@ -182,7 +182,7 @@
             router.run("/");
             return;
         }
-        console.log("not opening the file");
+        console.log("loaded file:", fileName);
         const ab = file.buffer;
         const config = getViewerConfiguration();
         config.file = ab;
