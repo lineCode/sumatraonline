@@ -25,7 +25,9 @@ const HASH_CHANGE_TIMEOUT = 1000; // milliseconds
 // Heuristic value used when adding the current position to the browser history.
 const POSITION_UPDATED_THRESHOLD = 50;
 // Heuristic value used when adding a temporary position to the browser history.
-const UPDATE_VIEWAREA_TIMEOUT = 1000; // milliseconds
+// SumatraPDF: this triggers a page re-load due to Navaid router
+//const UPDATE_VIEWAREA_TIMEOUT = 1000; // milliseconds
+const UPDATE_VIEWAREA_TIMEOUT = 0; // milliseconds
 
 /**
  * @typedef {Object} PDFHistoryOptions

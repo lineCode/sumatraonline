@@ -1629,6 +1629,9 @@ const PDFViewerApplication = {
    * @private
    */
   async _collectTelemetry(pdfDocument) {
+    /* SumatraPDF */
+    return;
+    /*
     const markInfo = await this.pdfDocument.getMarkInfo();
     if (pdfDocument !== this.pdfDocument) {
       return; // Document was closed while waiting for mark info.
@@ -1638,6 +1641,7 @@ const PDFViewerApplication = {
       type: "tagged",
       tagged,
     });
+    */
   },
 
   /**
@@ -2356,16 +2360,19 @@ function reportPageStatsPDFBug({ pageNumber }) {
 
 function webViewerInitialized() {
   const appConfig = PDFViewerApplication.appConfig;
-  let file;
-  if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
-    const queryString = document.location.search.substring(1);
-    const params = parseQueryString(queryString);
-    file = "file" in params ? params.file : AppOptions.get("defaultUrl");
-    validateFileURL(file);
-  } else if (PDFJSDev.test("MOZCENTRAL")) {
-    file = window.location.href;
-  } else if (PDFJSDev.test("CHROME")) {
-    file = AppOptions.get("defaultUrl");
+  let file = appConfig.file;
+
+  if (!file) {
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
+      const queryString = document.location.search.substring(1);
+      const params = parseQueryString(queryString);
+      file = "file" in params ? params.file : AppOptions.get("defaultUrl");
+      validateFileURL(file);
+    } else if (PDFJSDev.test("MOZCENTRAL")) {
+      file = window.location.href;
+    } else if (PDFJSDev.test("CHROME")) {
+      file = AppOptions.get("defaultUrl");
+    }
   }
 
   if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
@@ -2473,6 +2480,11 @@ function webViewerInitialized() {
 let webViewerOpenFileViaURL;
 if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
   webViewerOpenFileViaURL = function (file) {
+    if (file && "byteLength" in file) {
+      // Array buffer
+      PDFViewerApplication.open(file);
+      return;
+    }
     if (file && file.lastIndexOf("file:", 0) === 0) {
       // file:-scheme. Load the contents in the main thread because QtWebKit
       // cannot load file:-URLs in a Web Worker. file:-URLs are usually loaded

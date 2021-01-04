@@ -1,5 +1,7 @@
 import App from './App.svelte';
 import ViewLocal from './ViewLocal.svelte';
+import PDFJSViewer from './PdfJSViewer.svelte';
+
 import { router } from "./router.js";
 
 console.log("main.js");
@@ -42,8 +44,23 @@ function routeViewLocal() {
   mount(comp);
 }
 
+function routePDFJSViewer() {
+    console.log("routePDFJSViewer");
+    const fileName = decodeURIComponent(window.location.hash.slice(1));
+    console.log("dispatch /pdfjsviewer/, fileName:", fileName);
+    const opts = {
+      target: document.body,
+      props: {
+        fileName: fileName,
+      }
+    }
+    const comp = new PDFJSViewer(opts);
+    mount(comp);
+  }
+  
 router
   .on('/', routeSlash)
-  .on('/viewlocal/', routeViewLocal);
+  .on('/viewlocal/', routeViewLocal)
+  .on('/pdfjsviewer/', routePDFJSViewer);
 
 router.listen();

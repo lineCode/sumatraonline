@@ -82,10 +82,17 @@
 </div>
 
 {#if len(files) > 0}
-  <div>Local files:</div>
+  <div>Local files, open with viewlocal:</div>
   <div class="flex flex-col">
     {#each files as fileName}
       <a href="/viewlocal/#{fileName}">{fileName}</a>
+    {/each}
+  </div>
+
+  <div>Local files, open with pdfjsviewer:</div>
+  <div class="flex flex-col">
+    {#each files as fileName}
+      <a href="/pdfjsviewer/#{fileName}">{fileName}</a>
     {/each}
   </div>
 {/if}

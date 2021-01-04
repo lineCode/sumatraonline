@@ -147,6 +147,8 @@ class BaseViewer {
     if (this.constructor === BaseViewer) {
       throw new Error("Cannot initialize BaseViewer.");
     }
+    /* SumatraPDF */
+    /*
     const viewerVersion =
       typeof PDFJSDev !== "undefined" ? PDFJSDev.eval("BUNDLE_VERSION") : null;
     if (version !== viewerVersion) {
@@ -154,6 +156,7 @@ class BaseViewer {
         `The API version "${version}" does not match the Viewer version "${viewerVersion}".`
       );
     }
+    */
     this._name = this.constructor.name;
 
     this.container = options.container;
@@ -1299,8 +1302,10 @@ class BaseViewer {
       downloadManager: this.downloadManager,
       l10n,
       enableScripting,
-      hasJSActionsPromise:
-        hasJSActionsPromise || this.pdfDocument?.hasJSActions(),
+      /* SumatraPDF */
+      /*hasJSActionsPromise:
+        hasJSActionsPromise || this.pdfDocument?.hasJSActions(),*/
+        hasJSActionsPromise: null,
       mouseState: mouseState || this._mouseState,
     });
   }

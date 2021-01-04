@@ -4,8 +4,7 @@
   import PDFPage from "./PDFPage.svelte";
   import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
 
-  //import * as pdflib from "pdfjs-lib";
-  const pdflib = window.pdfjsLib;
+  import * as pdflib from "pdfjs-lib";
 
   export let fileName = "";
 
