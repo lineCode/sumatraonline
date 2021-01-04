@@ -3,7 +3,7 @@
   import { len } from "./utils.js";
   import { router } from "./router.js";
 
-  import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
+  import FS from "lightning-fs";
 
   let isDraggedOver = false;
   let files = [];

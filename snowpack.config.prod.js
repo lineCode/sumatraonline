@@ -6,7 +6,13 @@ module.exports = {
   },
   plugins: [
     '@snowpack/plugin-svelte',
-    "@snowpack/plugin-webpack"
+    [
+      "@snowpack/plugin-webpack", {
+        extendConfig: (config) => {
+          return config;
+        }
+      }
+    ],
   ],
   install: [
     /* ... */
@@ -25,5 +31,7 @@ module.exports = {
   },
   alias: {
     "pdfjs-lib": "./src/pdfjs-lib.js",
+    "pdfjs-web": "./src/pdfjs/web",
+    "lightning-fs": "./src/lightning-fs.js",
   },
 };
