@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { EventBus } from "pdfjs-web/ui_utils.js";
 
   let viewer = window.pdfjsViewer;
 
@@ -56,15 +57,6 @@
   }
 */
 
-  class Dispatcher {
-    dispatch(eventName, args) {
-      console.log("dispatch:", eventName, args);
-    }
-    _on(eventName, args) {
-      console.log("_on:", eventName, args);
-    }
-  }
-
   function calculateScale(width = -1, height = -1) {
     // Reset scaling to 1 so that "pdfViewer.viewport.width" gives proper width;
     pageView.update(1, rotate);
@@ -92,7 +84,7 @@
     pdfPage = await pdfDoc.getPage(pageNo);
     let pdfLinkService = new viewer.PDFLinkService();
     const opts = {
-      eventBus: new Dispatcher(),
+      eventBus: new EventBus(),
       container: container,
       id: pageNo,
       scale: 1,

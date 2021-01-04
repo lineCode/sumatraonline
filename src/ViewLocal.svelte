@@ -3,10 +3,16 @@
   import { router } from "./router.js";
   import PDFPage from "./PDFPage.svelte";
   import FS from "https://cdn.skypack.dev/@isomorphic-git/lightning-fs";
-  import * as pdflib from "pdfjs-lib";
+
+  //import * as pdflib from "pdfjs-lib";
+  const pdflib = window.pdfjsLib;
+
   export let fileName = "";
 
   const fs = new FS("files").promises;
+ 
+  //import { AppOptions } from "./pdfjs/web/app_options.js";
+  //import { PDFViewerApplication } from "./pdfjs/web/app.js";
 
   let viewer = window.pdfjsViewer;
 
