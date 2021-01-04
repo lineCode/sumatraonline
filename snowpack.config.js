@@ -15,7 +15,7 @@ module.exports = {
       /* ... */
     },
     devOptions: {
-      /* ... */
+      fallback: "index.html",
     },
     buildOptions: {
       clean: true,

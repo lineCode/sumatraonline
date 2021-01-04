@@ -31,10 +31,11 @@ function routeSlash() {
   currentFile = null;
 }
 
-function routeViewLocal(params) {
-  console.log(`routeViewLocal, path: ${window.location.pathname}, params: ${params}`);
-  let fileName = params.filename;
-  fileName = decodeURI(fileName);
+function routeViewLocal() {
+  console.log(`routeViewLocal, path: ${window.location}`);
+  const urlParams = new URLSearchParams(window.location.search);
+  let fileName = urlParams.get('file')
+  //fileName = decodeURI(fileName);
 
   // work-around interaction between Navaid and pdfjs viewer
   // pdfjs viewer pushes state onto browser history
@@ -45,7 +46,7 @@ function routeViewLocal(params) {
   if (currentFile == fileName) {
     return;
   }
-  console.log("dispatch /viewlocal/, filename:", fileName);
+  console.log("dispatch /viewlocal?file=", fileName);
   const opts = {
     target: document.body,
     props: {
@@ -56,9 +57,11 @@ function routeViewLocal(params) {
   currentFile = fileName;
   mount(comp);
 }
-  
+
 router
   .on('/', routeSlash)
-  .on('/viewlocal/:filename', routeViewLocal)
+  .on('/viewlocal', routeViewLocal)
 
-router.listen("/");
+const uri = location.pathname + location.search + location.hash
+console.log("listen for:", uri);
+router.listen(uri);

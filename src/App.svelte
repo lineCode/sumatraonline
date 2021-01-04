@@ -51,7 +51,7 @@
 
     await fs.writeFile("/" + fileName, view);
     console.log("Wrote file to storage:", fileName);
-    const uri = encodeURI("/viewlocal/" + fileName);
+    const uri = "/viewlocal?file=" + encodeURIComponent(fileName);
     //location.pathname = uri;
     router.run(uri);
   }
@@ -86,7 +86,7 @@
   <div>Local files:</div>
   <div class="flex flex-col">
     {#each files as fileName}
-      <a href="/viewlocal/{fileName}">{fileName}</a>
+      <a href="/viewlocal?file={fileName}">{fileName}</a>
     {/each}
   </div>
 {/if}
