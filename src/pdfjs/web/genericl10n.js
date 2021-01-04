@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+// SumatraPDF
+/*
 import "../external/webL10n/l10n.js";
 
 const webL10n = document.webL10n;
@@ -45,6 +47,31 @@ class GenericL10n {
   async translate(element) {
     const l10n = await this._ready;
     return l10n.translate(element);
+  }
+}
+
+export { GenericL10n };
+*/
+
+class GenericL10n {
+  constructor(lang) {
+    this._lang = lang;
+  }
+
+  async getLanguage() {
+    return this._lang || "en-us";
+  }
+
+  async getDirection() {
+    return "ltr";
+  }
+
+  async get(property, args, fallback) {
+    return fallback;
+  }
+
+  async translate(element) {
+    return element;
   }
 }
 
