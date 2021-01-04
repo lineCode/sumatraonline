@@ -1,0 +1,11 @@
+:80 {
+    @extjs {
+        path_regexp .*\.js$
+    }
+    header @extjs Content-Type application/javascript
+
+    root ./build
+    encode gzip
+
+    file_server
+}
