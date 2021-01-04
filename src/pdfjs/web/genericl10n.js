@@ -13,8 +13,6 @@
  * limitations under the License.
  */
 
-// SumatraPDF
-/*
 import "../external/webL10n/l10n.js";
 
 const webL10n = document.webL10n;
@@ -51,8 +49,10 @@ class GenericL10n {
 }
 
 export { GenericL10n };
-*/
 
+
+// SumatraPDF: TODO: simplify, but implementation of get() is not trivial
+/*
 class GenericL10n {
   constructor(lang) {
     this._lang = lang;
@@ -76,3 +76,4 @@ class GenericL10n {
 }
 
 export { GenericL10n };
+*/

@@ -33,7 +33,8 @@ function routeSlash() {
 
 function routeViewLocal(params) {
   console.log(`routeViewLocal, path: ${window.location.pathname}, params: ${params}`);
-  const fileName = params.filename;
+  let fileName = params.filename;
+  fileName = decodeURI(fileName);
 
   // work-around interaction between Navaid and pdfjs viewer
   // pdfjs viewer pushes state onto browser history

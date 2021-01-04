@@ -52,6 +52,7 @@
     await fs.writeFile("/" + fileName, view);
     console.log("Wrote file to storage:", fileName);
     const uri = encodeURI("/viewlocal/" + fileName);
+    //location.pathname = uri;
     router.run(uri);
   }
 </script>
