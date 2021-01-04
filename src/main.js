@@ -17,7 +17,6 @@ function unmount() {
 }
 
 function mount(component) {
-  unmount();
   currentComponent = component;
 }
 
@@ -26,6 +25,7 @@ function routeSlash() {
   const opts = {
     target: document.body,
   };
+  unmount();
   const comp = new Home(opts);
   mount(comp);
   currentFile = null;
@@ -53,9 +53,10 @@ function routeViewLocal() {
       fileName: fileName,
     }
   }
+  unmount();
   const comp = new PDFJSViewer(opts);
-  currentFile = fileName;
   mount(comp);
+  currentFile = fileName;
 }
 
 router
