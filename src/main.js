@@ -1,6 +1,6 @@
 import App from './App.svelte';
 import ViewLocal from './ViewLocal.svelte';
-import PDFJSViewer from './PdfJSViewer.svelte';
+import PDFJSViewer from './PDFJSViewer.svelte';
 
 import { router } from "./router.js";
 
