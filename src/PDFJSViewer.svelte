@@ -166,27 +166,29 @@
         console.log("PDFJSViewer: handleOnMount: loading file", fileName);
         // must patch overflow for 
         //document.getElementsByTagName('body')[0].style.overflow = "hidden";
-        const fs = new FS("files").promises;
-        let file;
-        try {
-            file = await fs.readFile("/" + fileName);
-        } catch (ex) {
-            // do nothing
-            console.log(
-                "PDFJSViewer: handleOnMount: fs.ReadFile() failed with",
-                ex
-            );
-        }
-        if (!file) {
+        if (!fileName) {
             console.log("no file, going back to /");
             router.run("/");
             return;
         }
-        console.log("loaded file:", fileName);
-        const ab = file.buffer;
+        async function loadFile() {
+            const fs = new FS("files").promises;
+            let file;
+            try {
+                file = await fs.readFile("/" + fileName);
+            } catch (ex) {
+                // do nothing
+                console.log(
+                    "PDFJSViewer: handleOnMount: fs.ReadFile() failed with",
+                    ex
+                );
+                return null;
+            }
+            console.log("loaded file:", fileName);
+            return file.buffer; // ArrayBuffer
+        }
         const config = getViewerConfiguration();
-        config.file = ab;
-
+        config.file = loadFile;
         Promise.all([
             import("pdfjs-web/genericcom.js"),
             import("pdfjs-web/pdf_print_service.js"),

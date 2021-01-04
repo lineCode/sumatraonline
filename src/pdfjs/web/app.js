@@ -2358,7 +2358,7 @@ function reportPageStatsPDFBug({ pageNumber }) {
   Stats.add(pageNumber, pageStats);
 }
 
-function webViewerInitialized() {
+async function webViewerInitialized() {
   const appConfig = PDFViewerApplication.appConfig;
   let file = appConfig.file;
 
@@ -2467,6 +2467,9 @@ function webViewerInitialized() {
   );
 
   try {
+    if (file && typeof file === "function") {
+      file = await file();
+    }
     webViewerOpenFileViaURL(file);
   } catch (reason) {
     PDFViewerApplication.l10n
