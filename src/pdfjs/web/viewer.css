@@ -25,7 +25,9 @@
   --doorhanger-icon-opacity: 0.9;
 
   --main-color: rgba(12, 12, 13, 1);
-  --body-bg-color: rgba(237, 237, 240, 1);
+	/* same as SumatraPDF background */
+  --body-bg-color: #f2f2f2;
+  /* --body-bg-color: rgba(237, 237, 240, 1); */
   --errorWrapper-bg-color: rgba(255, 74, 74, 1);
   --progressBar-color: rgba(10, 132, 255, 1);
   --progressBar-indeterminate-bg-color: rgba(221, 221, 222, 1);

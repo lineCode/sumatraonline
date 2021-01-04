@@ -1,4 +1,4 @@
-import App from './App.svelte';
+import Home from './Home.svelte';
 import PDFJSViewer from './PDFJSViewer.svelte';
 
 import { router } from "./router.js";
@@ -26,7 +26,7 @@ function routeSlash() {
   const opts = {
     target: document.body,
   };
-  const comp = new App(opts);
+  const comp = new Home(opts);
   mount(comp);
   currentFile = null;
 }
