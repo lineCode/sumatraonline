@@ -14,20 +14,11 @@ module.exports = {
       }
     ],
   ],
-  install: [
-    /* ... */
-  ],
-  installOptions: {
-    /* ... */
-  },
   devOptions: {
     /* ... */
   },
   buildOptions: {
     clean: true,
-  },
-  proxy: {
-    /* ... */
   },
   alias: {
     "pdfjs-lib": "./src/pdfjs-lib.js",

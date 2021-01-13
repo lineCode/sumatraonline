@@ -5,23 +5,13 @@ module.exports = {
       src: "/dist",
     },
     plugins: [
-      /* ... */
     '@snowpack/plugin-svelte'
     ],
-    install: [
-      /* ... */
-    ],
-    installOptions: {
-      /* ... */
-    },
     devOptions: {
       fallback: "index.html",
     },
     buildOptions: {
       clean: true,
-    },
-    proxy: {
-      /* ... */
     },
     alias: {
       "pdfjs-lib": "./src/pdfjs-lib.js",
