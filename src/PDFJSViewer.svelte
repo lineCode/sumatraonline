@@ -1,7 +1,7 @@
 <script>
     import { onMount, onDestroy } from "svelte";
     import { router } from "./router.js";
-    import FS from "lightning-fs";
+    import FS from "@isomorphic-git/lightning-fs";
     import { AppOptions } from "./pdfjs/web/app_options.js";
     import { PDFViewerApplication } from "./pdfjs/web/app.js";
 

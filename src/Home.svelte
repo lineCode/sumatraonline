@@ -3,7 +3,7 @@
   import { len } from "./utils.js";
   import { router } from "./router.js";
 
-  import FS from "lightning-fs";
+  import FS from "@isomorphic-git/lightning-fs";
 
   let isDraggedOver = false;
   // file object: type: "file" or "dir", mode, size, isFile(), isDirectory()

@@ -14,6 +14,10 @@ module.exports = {
       }
     ],
   ],
+  packageOptions: {
+    //external: ["pdfjs-lib", "pdfjs-web"],
+    source: 'remote',
+  },
   devOptions: {
     /* ... */
   },
