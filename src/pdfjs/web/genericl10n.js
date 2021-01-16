@@ -15,8 +15,4 @@
 
 // SumatraaPDF: use NullL10n instead of ../external/webL10n/l10n.js
 
-import { NullL10n } from "./ui_utils.js";
-
-export function GenericL10n() {
-  return NullL10n;
-}
+export { GenericL10n } from "./ui_utils.js";

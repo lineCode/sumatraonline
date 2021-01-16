@@ -90,6 +90,10 @@ const NullL10n = {
   async translate(element) {},
 };
 
+export function GenericL10n() {
+  return NullL10n;
+}
+
 /**
  * Returns scale factor for the canvas. It makes sense for the HiDPI displays.
  * @returns {Object} The object with horizontal (sx) and vertical (sy)
