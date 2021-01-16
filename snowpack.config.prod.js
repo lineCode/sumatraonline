@@ -6,20 +6,17 @@ module.exports = {
   },
   plugins: [
     '@snowpack/plugin-svelte',
-    [
-      "@snowpack/plugin-webpack", {
-        extendConfig: (config) => {
-          return config;
-        }
-      }
-    ],
   ],
+  "optimize": {
+    //"bundle": true,
+    //"target": 'es2018'
+  },
   packageOptions: {
     //external: ["pdfjs-lib", "pdfjs-web"],
     source: 'remote',
   },
   devOptions: {
-    /* ... */
+    fallback: "index.html",
   },
   buildOptions: {
     clean: true,
@@ -27,6 +24,5 @@ module.exports = {
   alias: {
     "pdfjs-lib": "./src/pdfjs-lib.js",
     "pdfjs-web": "./src/pdfjs/web",
-    "lightning-fs": "./src/lightning-fs.js",
   },
 };
