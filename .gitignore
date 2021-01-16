@@ -7,3 +7,4 @@
 .now
 yarn.lock
 yarn-error.log
+.snowpack/
