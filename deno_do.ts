@@ -1,5 +1,4 @@
 // console.log("Deno:", Deno);
-
 import { moveSync } from "https://deno.land/std/fs/mod.ts";
 
 async function waitProcess(p: any) {
@@ -17,16 +16,22 @@ async function cmdRun(cmd: string[]) {
         cmd: cmd,
     })
     waitProcess(p);
-
 }
 
+function removeDir(dir: string) {
+    try {
+        Deno.removeSync(dir, { recursive: true });
+    } catch {
+        // it throws when directory doesn't exist, which is stupid
+    }
+}
 async function build() {
-    Deno.removeSync("build", { recursive: true});
+    removeDir("build");
     cmdRun(["cmd", "/C", "npm run build"]);
 }
 
 async function buildProd() {
-    Deno.removeSync("build", { recursive: true});
+    removeDir("build");
     cmdRun(["cmd", "/C", "npm run buildprod"]);
 }
 
@@ -40,10 +45,10 @@ async function deploy_cf() {
     cmdRun(["git", "rebase", "master"])
     cmdRun(["cmd", "/C", "npm run build"]);
     //Deno.removeSync("build", { recursive: true});
-    Deno.removeSync("www", { recursive: true});
+    removeDir("www");
     moveSync("build", "www");
     cmdRun(["git", "add", "www"])
-    cmdRun(["git", "ci", "-m", `"deploy"`])
+    cmdRun(["git", "commit", "-am", `"deploy"`])
     cmdRun(["git", "push", "--force"])
     cmdRun(["git", "checkout", "master"])
 }
