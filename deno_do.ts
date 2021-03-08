@@ -12,10 +12,12 @@ async function waitProcess(p: any) {
 }
 
 async function cmdRun(cmd: string[]) {
+    console.log("running:", cmd);
     const p = Deno.run({
         cmd: cmd,
     })
-    waitProcess(p);
+    await waitProcess(p);
+    console.log("finished:", cmd);
 }
 
 function removeDir(dir: string) {
@@ -32,7 +34,7 @@ async function build() {
 
 async function buildProd() {
     removeDir("build");
-    cmdRun(["cmd", "/C", "npm run buildprod"]);
+    await cmdRun(["cmd", "/C", "npm run buildprod"]);
 }
 
 async function run() {
@@ -40,19 +42,19 @@ async function run() {
 }
 
 async function deploy_cf() {
-    cmdRun(["git", "clean", "-f", "-d"])
-    cmdRun(["git", "checkout", "deploy-cf"])
-    cmdRun(["git", "rebase", "master"])
+    await cmdRun(["git", "clean", "-f", "-d"])
+    await cmdRun(["git", "checkout", "deploy-cf"])
+    await cmdRun(["git", "rebase", "master"])
     console.log("before npm run build");
-    cmdRun(["cmd", "/C", "npm run build"]);
+    await cmdRun(["cmd", "/C", "npm run build"]);
     //Deno.removeSync("build", { recursive: true});
     console.log("after npm run build");
     removeDir("www");
     moveSync("build", "www");
-    cmdRun(["git", "add", "www"])
-    cmdRun(["git", "commit", "-am", `"deploy"`])
-    cmdRun(["git", "push", "--force"])
-    cmdRun(["git", "checkout", "master"])
+    await cmdRun(["git", "add", "www"])
+    await cmdRun(["git", "commit", "-am", `"deploy"`])
+    await cmdRun(["git", "push", "--force"])
+    await cmdRun(["git", "checkout", "master"])
 }
 
 function usage() {
