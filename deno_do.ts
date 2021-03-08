@@ -40,7 +40,7 @@ async function run() {
 }
 
 async function deploy_cf() {
-    cmdRun(["git", "clean", "-f"])
+    cmdRun(["git", "clean", "-f", "-d"])
     cmdRun(["git", "checkout", "deploy-cf"])
     cmdRun(["git", "rebase", "master"])
     cmdRun(["cmd", "/C", "npm run build"]);
