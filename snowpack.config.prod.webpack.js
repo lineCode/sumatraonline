@@ -5,10 +5,17 @@ module.exports = {
     src: "/dist",
   },
   plugins: [
-    '@snowpack/plugin-svelte'
+    '@snowpack/plugin-svelte',
+    [
+      "@snowpack/plugin-webpack", {
+        extendConfig: (config) => {
+          return config;
+        }
+      }
+    ],
   ],
   devOptions: {
-    fallback: "index.html",
+    /* ... */
   },
   buildOptions: {
     clean: true,

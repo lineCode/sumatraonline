@@ -1,2 +1,1 @@
-deno run -A .\denodo.ts %*
-
+deno run -A .\deno_do.ts %*

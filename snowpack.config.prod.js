@@ -5,20 +5,18 @@ module.exports = {
     src: "/dist",
   },
   plugins: [
-    '@snowpack/plugin-svelte',
-    [
-      "@snowpack/plugin-webpack", {
-        extendConfig: (config) => {
-          return config;
-        }
-      }
-    ],
+    '@snowpack/plugin-svelte'
   ],
   devOptions: {
-    /* ... */
+    fallback: "index.html",
   },
   buildOptions: {
     clean: true,
+  },
+  optimize: {
+    bundle: true,
+    minify: true,
+    target: "es2018",
   },
   alias: {
     "pdfjs-lib": "./src/pdfjs-lib.js",
