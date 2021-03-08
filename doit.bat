@@ -1,1 +1,1 @@
-deno run -A .\deno_do.ts %*
+deno run --unstable -A .\deno_do.ts %*

@@ -1,5 +1,7 @@
 // console.log("Deno:", Deno);
 
+import { moveSync } from "https://deno.land/std/fs/mod.ts";
+
 async function waitProcess(p: any) {
     try {
         const s = await p.status();
@@ -10,33 +12,49 @@ async function waitProcess(p: any) {
     }
 }
 
+async function cmdRun(cmd: string[]) {
+    const p = Deno.run({
+        cmd: cmd,
+    })
+    waitProcess(p);
+
+}
+
 async function build() {
     Deno.removeSync("build", { recursive: true});
-
-    const p = Deno.run({
-        cmd: ["cmd", "/C", "npm run build"],
-    });
-    waitProcess(p);
+    cmdRun(["cmd", "/C", "npm run build"]);
 }
 
 async function buildProd() {
     Deno.removeSync("build", { recursive: true});
-
-    const p = Deno.run({
-        cmd: ["cmd", "/C", "npm run buildprod"],
-    });
-    waitProcess(p);
+    cmdRun(["cmd", "/C", "npm run buildprod"]);
 }
 
 async function run() {
-    const p = Deno.run({
-        cmd: ["cmd", "/C", "npm run start"],
-    })
-    waitProcess(p);
+    cmdRun(["cmd", "/C", "npm run start"]);
+}
+
+async function deploy_cf() {
+    cmdRun(["git", "clean", "-f"])
+    cmdRun(["git", "checkout", "deploy-cf"])
+    cmdRun(["git", "rebase", "master"])
+    cmdRun(["cmd", "/C", "npm run build"]);
+    //Deno.removeSync("build", { recursive: true});
+    Deno.removeSync("www", { recursive: true});
+    moveSync("build", "www");
+    cmdRun(["git", "add", "www"])
+    cmdRun(["git", "ci", "-m", `"deploy"`])
+    cmdRun(["git", "push", "--force"])
+    cmdRun(["git", "checkout", "master"])
 }
 
 function usage() {
-    console.log("Usage: doit.bat build | buildprod | run");
+    console.log(`Usage: doit.bat $cmd
+  build
+  buildprod
+  run
+  deploy-cf
+`);
 }
 
 function len(o : any) {
@@ -62,6 +80,9 @@ switch (arg) {
         break;
     case "run":
         run();
+        break;
+    case "deploy-cf":
+        deploy_cf();
         break;
     default:
         console.log("Unknown cmd-line args:", Deno.args);
