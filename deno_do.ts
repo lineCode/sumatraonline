@@ -43,8 +43,10 @@ async function deploy_cf() {
     cmdRun(["git", "clean", "-f", "-d"])
     cmdRun(["git", "checkout", "deploy-cf"])
     cmdRun(["git", "rebase", "master"])
+    console.log("before npm run build");
     cmdRun(["cmd", "/C", "npm run build"]);
     //Deno.removeSync("build", { recursive: true});
+    console.log("after npm run build");
     removeDir("www");
     moveSync("build", "www");
     cmdRun(["git", "add", "www"])
