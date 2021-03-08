@@ -52,7 +52,7 @@ async function deploy_cf() {
     removeDir("www");
     moveSync("build", "www");
     await cmdRun(["git", "add", "www"])
-    await cmdRun(["git", "commit", "-am", `"deploy"`])
+    await cmdRun(["git", "commit", "-am", `deploy`])
     await cmdRun(["git", "push", "--force"])
     await cmdRun(["git", "checkout", "master"])
 }
